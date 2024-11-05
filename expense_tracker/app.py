@@ -526,6 +526,79 @@ def track_budget():
 
     return render_template('track_budget.html', monthly_budget=monthly_budget, total_expenses=total_expenses, remaining_budget=remaining_budget)
 
+# Function to edit_expense
+@app.route('/edit_expense/<expense_id>', methods=['GET', 'POST'])
+@login_required
+def edit_expense(expense_id):
+    """
+    This function handles the editing of an existing expense.
+    It retrieves the expense by its ID, validates the updated input fields, and saves the changes.
+
+    :param expense_id: The ID of the expense to be edited.
+    :return: Redirects to the view expenses page on successful edit or renders the edit expense template with error messages.
+    """
+    global expense_cache
+    username = session['username']
+
+    # Retrieve the expense to be edited
+    expense_to_edit = [expense for expense in expense_cache if expense['username'] == username and expense['id'] == expense_id]
+    if not expense_to_edit:
+        flash(_("Expense not found."), 'error')
+        return redirect(url_for('view_expenses'))
+
+    if request.method == 'POST':
+        expense_description = request.form['description']
+        expense_amount = request.form['amount']
+        expense_date = request.form['date']
+        expense_category = request.form['category']
+
+        # Validate the input fields
+        if not validate_date(expense_date):
+            flash(_("Invalid date format. Please use YYYY-MM-DD."), 'error')
+            return render_template('edit_expense.html', expense=expense_to_edit[0])
+
+        if not validate_amount(expense_amount):
+            flash(_("Invalid amount. Please enter a positive number."), 'error')
+            return render_template('edit_expense.html', expense=expense_to_edit[0])
+
+        if not validate_category(expense_category):
+            flash(_("Invalid category. It should contain only alphanumeric characters and spaces and not be empty."), 'error')
+            return render_template('edit_expense.html', expense=expense_to_edit[0])
+
+        if not validate_description(expense_description):
+            flash(_("Invalid description. It cannot be empty."), 'error')
+            return render_template('edit_expense.html', expense=expense_to_edit[0])
+
+        # Update the expense in the cache
+        expense_to_edit[0]['description'] = expense_description
+        expense_to_edit[0]['amount'] = float(expense_amount)
+        expense_to_edit[0]['date'] = expense_date
+        expense_to_edit[0]['category'] = expense_category
+
+        flash(_("Expense edited successfully."), 'success')
+        return redirect(url_for('view_expenses'))
+
+    return render_template('edit_expense.html', expense=expense_to_edit[0])
+
+# Function to delete_expense
+@app.route('/delete_expense/<expense_id>', methods=['GET'])
+@login_required
+def delete_expense(expense_id):
+    """
+    This function handles the deletion of an expense by its ID.
+
+    :param expense_id: The ID of the expense to be deleted.
+    :return: Redirects to the view expenses page after deleting the expense.
+    """
+    global expense_cache
+    username = session['username']
+
+    # Remove the expense from the cache
+    expense_cache = [expense for expense in expense_cache if expense['username'] == username and expense['id']!= expense_id]
+
+    flash(_("Expense deleted successfully."), 'success')
+    return redirect(url_for('view_expenses'))
+
 # Function to logout
 @app.route('/logout')
 def logout():

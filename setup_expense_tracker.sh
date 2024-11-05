@@ -533,6 +533,79 @@ def track_budget():
 
     return render_template('track_budget.html', monthly_budget=monthly_budget, total_expenses=total_expenses, remaining_budget=remaining_budget)
 
+# Function to edit_expense
+@app.route('/edit_expense/<expense_id>', methods=['GET', 'POST'])
+@login_required
+def edit_expense(expense_id):
+    """
+    This function handles the editing of an existing expense.
+    It retrieves the expense by its ID, validates the updated input fields, and saves the changes.
+
+    :param expense_id: The ID of the expense to be edited.
+    :return: Redirects to the view expenses page on successful edit or renders the edit expense template with error messages.
+    """
+    global expense_cache
+    username = session['username']
+
+    # Retrieve the expense to be edited
+    expense_to_edit = [expense for expense in expense_cache if expense['username'] == username and expense['id'] == expense_id]
+    if not expense_to_edit:
+        flash(_("Expense not found."), 'error')
+        return redirect(url_for('view_expenses'))
+
+    if request.method == 'POST':
+        expense_description = request.form['description']
+        expense_amount = request.form['amount']
+        expense_date = request.form['date']
+        expense_category = request.form['category']
+
+        # Validate the input fields
+        if not validate_date(expense_date):
+            flash(_("Invalid date format. Please use YYYY-MM-DD."), 'error')
+            return render_template('edit_expense.html', expense=expense_to_edit[0])
+
+        if not validate_amount(expense_amount):
+            flash(_("Invalid amount. Please enter a positive number."), 'error')
+            return render_template('edit_expense.html', expense=expense_to_edit[0])
+
+        if not validate_category(expense_category):
+            flash(_("Invalid category. It should contain only alphanumeric characters and spaces and not be empty."), 'error')
+            return render_template('edit_expense.html', expense=expense_to_edit[0])
+
+        if not validate_description(expense_description):
+            flash(_("Invalid description. It cannot be empty."), 'error')
+            return render_template('edit_expense.html', expense=expense_to_edit[0])
+
+        # Update the expense in the cache
+        expense_to_edit[0]['description'] = expense_description
+        expense_to_edit[0]['amount'] = float(expense_amount)
+        expense_to_edit[0]['date'] = expense_date
+        expense_to_edit[0]['category'] = expense_category
+
+        flash(_("Expense edited successfully."), 'success')
+        return redirect(url_for('view_expenses'))
+
+    return render_template('edit_expense.html', expense=expense_to_edit[0])
+
+# Function to delete_expense
+@app.route('/delete_expense/<expense_id>', methods=['GET'])
+@login_required
+def delete_expense(expense_id):
+    """
+    This function handles the deletion of an expense by its ID.
+
+    :param expense_id: The ID of the expense to be deleted.
+    :return: Redirects to the view expenses page after deleting the expense.
+    """
+    global expense_cache
+    username = session['username']
+
+    # Remove the expense from the cache
+    expense_cache = [expense for expense in expense_cache if expense['username'] == username and expense['id']!= expense_id]
+
+    flash(_("Expense deleted successfully."), 'success')
+    return redirect(url_for('view_expenses'))
+
 # Function to logout
 @app.route('/logout')
 def logout():
@@ -702,6 +775,7 @@ cat << 'EOF' > expense_tracker_bundle/templates/view_expenses.html
                 <th>Category</th>
                 <th>Amount</th>
                 <th>Description</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -711,6 +785,14 @@ cat << 'EOF' > expense_tracker_bundle/templates/view_expenses.html
                 <td>{{ expense.category }}</td>
                 <td>{{ expense.amount }}</td>
                 <td>{{ expense.description }}</td>
+                {% if session.get('is_admin', False) %}
+                <td>
+                    <a href="{{ url_for('edit_expense', expense_id=expense.id) }}">Edit</a>
+                    <a href="{{ url_for('delete_expense', expense_id=expense.id) }}">Delete</a>
+                </td>
+                {% else %}
+                <td></td>
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>
@@ -740,6 +822,35 @@ cat << 'EOF' > expense_tracker_bundle/templates/set_monthly_budget.html
 </html>
 EOF
 
+cat << 'EOF' > expense_tracker_bundle/templates/edit_expense.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Expense</title>
+</head>
+<body>
+    <h1>Edit Expense</h1>
+    <form method="post">
+        <label for="date">Date (YYYY-MM-DD):</label>
+        <input type="date" id="date" name="date" value="{{ expense.date }}" required>
+        <label for="category">Category:</label>
+        <input type="text" id="category" name="category" value="{{ expense.category }}" required>
+        <label for="amount">Amount:</label>
+        <input type="number" step="0.01" id="amount" name="amount" value="{{ expense.amount }}" required>
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description" value="{{ expense.description }}">
+        <button type="submit">Save Changes</button>
+    </form>
+    {% if error %}
+        <p>{{ error }}</p>
+    {% endif %}
+    <a href="{{ url_for('view_expenses') }}">Cancel and Return to View Expenses</a>
+</body>
+</html>
+EOF
+
 cat << 'EOF' > expense_tracker_bundle/templates/track_budget.html
 <!DOCTYPE html>
 <html lang="en">
@@ -754,6 +865,7 @@ cat << 'EOF' > expense_tracker_bundle/templates/track_budget.html
 </body>
 </html>
 EOF
+
 
 cat << 'EOF' > expense_tracker_bundle/templates/register.html
 <!DOCTYPE html>
@@ -842,28 +954,52 @@ cat << 'EOF' > expense_tracker_bundle/README.md
 # Expense Tracker Application
 
 This is an expense tracking application built with Flask.
+![Screenshot of the Expense Tracker Interface](./screenshots/home.jpg)
 
 ## Installation
-1. Run the `manage.sh` script with the `build` command to build the Docker container.
-2. Start the container with the `start` command.
+1. Run the `setup_expense_tracker.sh` script. This script will perform the following actions:
+    - Handle any necessary self-extraction processes.
+    - Clean up any previous installations.
+    - Copy existing user data and expense data if any.
+    - Move the extracted files to the correct location.
+    Example: `./setup_expense_tracker.sh`
+2. Build the Docker image using the following command: `./manage.sh [build|rebuild].`
+3. Start the container with the `start` command: `./manage.sh start`
 
 ## Usage
 You can access the application at `http://localhost:5001`.
 
 ## Mounting Volumes
-The Docker container mounts the `/app/data` directory for CSV files and the `/app/log` directory for log.
+The Docker container mounts the `/app/data` directory for CSV files and the `/app/log` directory for logs.
 
 ## Routes
-- `/`: Home page. display interactive menu options
+- `/`: Home page. Displays interactive menu options.
 - `/register`: Registration page.
 - `/login`: Login page.
 - `/logout`: Logout functionality.
+- `/add_expense`: Route for adding an expense.
+- `/view_expenses`: Route for viewing all expenses.
+- `/set_monthly_budget`: Route for setting the monthly budget.
+- `/save_expenses`: Route for saving expenses.
+- `/track_budget`: Route for tracking the budget.
+- `/edit_expense/<expense_id>`: Route for editing an expense by its ID.
+- `/delete_expense/<expense_id>`: Route for deleting an expense by its ID.
+
+## Manage.sh Arguments
+- `build`: Build the Docker container and handle self-extraction.
+- `debug`: Start the Docker container in debug mode.
+- `start`: Start the Docker container.
+- `stop`: Stop the Docker container.
+- `status`: Check the status of the Docker container.
+- `clean`: Clean Docker images.
+- `restart`: Restart the Docker container.
+- `rebuild`: Rebuild the Docker container.
 
 ## Contributors
-Your Name
+Shouwei Lin
 
 ## License
-MIT License
+This project is licensed under the MIT License.
 EOF
 
 cat << 'EOF' > expense_tracker_bundle/Dockerfile
@@ -969,6 +1105,11 @@ fi
 
 # Move extracted files to the final location
 mv expense_tracker_bundle expense_tracker
+
+# Copy screenshots to the final location
+if [ -d "screenshots" ]; then
+    cp -rf screenshots expense_tracker/screenshots
+fi
 
 # Make manage.sh executable
 chmod +x expense_tracker/manage.sh
