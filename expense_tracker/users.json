@@ -1,10 +1,10 @@
-[
-    {
-        "username": "user1",
-        "password_hash": "hashed_password_1"
-    },
-    {
-        "username": "user2",
-        "password_hash": "hashed_password_2"
+{
+    "user1": {
+        "password_hash": "pbkdf2:sha256:000000$A23bRneljZqnCeyV$d75793d89fca9efe526835f1cc8517f144284ce15dde4ff5e41a599131d3bae1",
+        "monthly_budget": 2000.0
     }
-]
+    "user2": {
+        "password_hash": "pbkdf2:sha256:1111$A23bRneljZqnCeyV$d75793d89fca9efe526835f1cc8517f144284ce15dde4ff5e41a599131d3bae1",
+        "monthly_budget": 2000.0
+    }
+}

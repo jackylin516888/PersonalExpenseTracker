@@ -16,11 +16,11 @@
         <input type="number" step="0.01" id="amount" name="amount" required>
         <label for="description">Description:</label>
         <input type="text" id="description" name="description">
-        <button type="submit">Add Expense</button>
+        <button type="submit" name="add_expense">Add Expense</button>
     </form>
     {% if error %}
         <p>{{ error }}</p>
     {% endif %}
-    <button><a href="{{ home_url }}">Go to Home</a></button>
+    <a href="{{ url_for('home') }}">Return to Home</a>
 </body>
 </html>

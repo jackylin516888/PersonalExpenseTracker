@@ -1,6 +1,10 @@
-[
-    {
-        "username": "jacky",
-        "password_hash": "pbkdf2:sha256:260000$FaP9sVr2bQypmIwW$7941c4aef225e054c35afa23c7239959af12d43ddeb0993dfa2f79cd8c979250"
+{
+    "jacky": {
+        "password_hash": "pbkdf2:sha256:260000$yRlLHsOZ4oxuaI5K$bbb134bef8b9904b8be84c540b65c1ae9c091ff6f2a9fb89fcdffff1005aa3b8",
+        "monthly_budget": 3000.0
+    },
+    "tom": {
+        "password_hash": "pbkdf2:sha256:260000$3RjjMJWA8hH6LRpP$8c4c2a4b8ae4748fea4408e60ecb208ebdd35e0072613ce9f9eb064ed1b01a22",
+        "monthly_budget": 1600.0
     }
-]
+}

@@ -1,3 +1,4 @@
-date,category,amount,description
-2024-11-05,food,30.0,lunch
-2024-11-05,food,50.0,lunch
+username,date,category,amount,description
+jacky,2024-11-05,lunch,30.0,lunch
+jacky,2024-11-05,coat,100.0,coat
+tom,2024-11-05,food,35.0,lunch
