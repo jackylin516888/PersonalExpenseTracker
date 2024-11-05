@@ -954,7 +954,25 @@ cat << 'EOF' > expense_tracker_bundle/README.md
 # Expense Tracker Application
 
 This is an expense tracking application built with Flask.
+
+## Screenshots
+### Home Page
 ![Screenshot of the Expense Tracker Interface](./screenshots/home.jpg)
+
+### Rigister page
+![Screenshot of the Expense Tracker Interface](./screenshots/register.jpg)
+
+### Login page
+![Screenshot of the Expense Tracker Interface](./screenshots/login.jpg)
+
+### Set Monthly Budget page
+![Screenshot of the Expense Tracker Interface](./screenshots/set_monthly_budget.jpg)
+
+### Track Budget page
+![Screenshot of the Expense Tracker Interface](./screenshots/track_budget.jpg)
+
+### view expenses page
+![Screenshot of the Expense Tracker Interface](./screenshots/view_expenses.jpg)
 
 ## Installation
 1. Run the `setup_expense_tracker.sh` script. This script will perform the following actions:

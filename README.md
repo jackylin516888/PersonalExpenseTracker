@@ -1,6 +1,7 @@
 # Expense Tracker Application
 
 This is an expense tracking application built with Flask.
+This is an expense tracking application built with Flask.
 
 ## Screenshots
 ### Home Page
