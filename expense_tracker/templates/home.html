@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Expense Tracker - Home</title>
+</head>
+<body>
+    <h1>Personal Expense Tracker</h1>
+    <p>Menu:</p>
+    <ul>
+        <li><a href="{{ url_for('add_expense') }}">1. Add expense</a></li>
+        <li><a href="{{ url_for('view_expenses') }}">2. View expenses</a></li>
+        <li><a href="{{ url_for('set_monthly_budget') }}">3. Set monthly budget</a></li>
+        <li><a href="{{ url_for('track_budget') }}">4. Track budget</a></li>
+        <li><a href="{{ url_for('save_expenses') }}">5. Save expenses</a></li>
+        <li><a href="{{ url_for('logout') }}">6. Exit</a></li>
+    </ul>
+</body>
+</html>

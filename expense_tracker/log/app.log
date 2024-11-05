@@ -1,0 +1,68 @@
+2024-11-05 02:31:16,200 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2024-11-05 02:31:16,200 - werkzeug - INFO -  * Running on http://172.17.0.2:5001/ (Press CTRL+C to quit)
+2024-11-05 02:31:16,200 - werkzeug - INFO -  * Restarting with stat
+2024-11-05 02:31:16,307 - werkzeug - WARNING -  * Debugger is active!
+2024-11-05 02:31:16,308 - werkzeug - INFO -  * Debugger PIN: 142-490-276
+2024-11-05 02:31:21,179 - root - DEBUG - Entering home route
+2024-11-05 02:31:21,187 - werkzeug - INFO - 192.168.65.1 - - [05/Nov/2024 02:31:21] "GET / HTTP/1.1" 200 -
+2024-11-05 02:31:23,246 - root - DEBUG - Entering home route
+2024-11-05 02:31:23,248 - werkzeug - INFO - 192.168.65.1 - - [05/Nov/2024 02:31:23] "GET / HTTP/1.1" 200 -
+2024-11-05 02:31:29,455 - root - DEBUG - Entering login route
+2024-11-05 02:31:29,456 - root - DEBUG - Rendering login template
+2024-11-05 02:31:29,461 - werkzeug - INFO - 192.168.65.1 - - [05/Nov/2024 02:31:29] "GET /login HTTP/1.1" 200 -
+2024-11-05 02:31:36,403 - root - DEBUG - Entering login route
+2024-11-05 02:31:36,405 - root - DEBUG - Loading user data
+2024-11-05 02:31:36,406 - root - DEBUG - Loaded 1 users for login check
+2024-11-05 02:31:36,512 - root - DEBUG - Login successful
+2024-11-05 02:31:36,514 - werkzeug - INFO - 192.168.65.1 - - [05/Nov/2024 02:31:36] "[32mPOST /login HTTP/1.1[0m" 302 -
+2024-11-05 02:31:36,516 - root - DEBUG - Entering home route
+2024-11-05 02:31:36,517 - werkzeug - INFO - 192.168.65.1 - - [05/Nov/2024 02:31:36] "GET / HTTP/1.1" 200 -
+2024-11-05 02:31:41,245 - root - DEBUG - Entering add_expense route
+2024-11-05 02:31:41,246 - root - DEBUG - Rendering add_expense template
+2024-11-05 02:31:41,249 - werkzeug - INFO - 192.168.65.1 - - [05/Nov/2024 02:31:41] "GET /add_expense HTTP/1.1" 200 -
+2024-11-05 02:31:44,021 - root - DEBUG - Entering home route
+2024-11-05 02:31:44,025 - werkzeug - INFO - 192.168.65.1 - - [05/Nov/2024 02:31:44] "GET / HTTP/1.1" 200 -
+2024-11-05 02:31:45,234 - root - DEBUG - Entering add_expense route
+2024-11-05 02:31:45,235 - root - DEBUG - Rendering add_expense template
+2024-11-05 02:31:45,236 - werkzeug - INFO - 192.168.65.1 - - [05/Nov/2024 02:31:45] "GET /add_expense HTTP/1.1" 200 -
+2024-11-05 02:31:58,682 - root - DEBUG - Entering add_expense route
+2024-11-05 02:31:58,694 - root - DEBUG - Expense added successfully
+2024-11-05 02:31:58,696 - werkzeug - INFO - 192.168.65.1 - - [05/Nov/2024 02:31:58] "[32mPOST /add_expense HTTP/1.1[0m" 302 -
+2024-11-05 02:31:58,699 - root - DEBUG - Entering home route
+2024-11-05 02:31:58,700 - werkzeug - INFO - 192.168.65.1 - - [05/Nov/2024 02:31:58] "GET / HTTP/1.1" 200 -
+2024-11-05 02:32:01,347 - root - DEBUG - Entering view_expenses route
+2024-11-05 02:32:01,350 - werkzeug - INFO - 192.168.65.1 - - [05/Nov/2024 02:32:01] "GET /view_expenses HTTP/1.1" 200 -
+2024-11-05 02:32:04,117 - root - DEBUG - Entering view_expenses route
+2024-11-05 02:32:04,118 - werkzeug - INFO - 192.168.65.1 - - [05/Nov/2024 02:32:04] "GET /view_expenses HTTP/1.1" 200 -
+2024-11-05 02:32:11,283 - root - DEBUG - Entering add_expense route
+2024-11-05 02:32:11,284 - root - DEBUG - Rendering add_expense template
+2024-11-05 02:32:11,285 - werkzeug - INFO - 192.168.65.1 - - [05/Nov/2024 02:32:11] "GET /add_expense HTTP/1.1" 200 -
+2024-11-05 02:32:31,945 - root - DEBUG - Entering add_expense route
+2024-11-05 02:32:31,947 - root - DEBUG - Expense added successfully
+2024-11-05 02:32:31,947 - werkzeug - INFO - 192.168.65.1 - - [05/Nov/2024 02:32:31] "[32mPOST /add_expense HTTP/1.1[0m" 302 -
+2024-11-05 02:32:31,950 - root - DEBUG - Entering home route
+2024-11-05 02:32:31,951 - werkzeug - INFO - 192.168.65.1 - - [05/Nov/2024 02:32:31] "GET / HTTP/1.1" 200 -
+2024-11-05 02:32:33,888 - root - DEBUG - Entering save_expenses route
+2024-11-05 02:32:33,890 - root - DEBUG - Expenses saved
+2024-11-05 02:32:33,891 - werkzeug - INFO - 192.168.65.1 - - [05/Nov/2024 02:32:33] "[32mGET /save_expenses HTTP/1.1[0m" 302 -
+2024-11-05 02:32:33,905 - root - DEBUG - Entering home route
+2024-11-05 02:32:33,906 - werkzeug - INFO - 192.168.65.1 - - [05/Nov/2024 02:32:33] "GET / HTTP/1.1" 200 -
+2024-11-05 02:32:36,592 - root - DEBUG - Entering view_expenses route
+2024-11-05 02:32:36,596 - werkzeug - INFO - 192.168.65.1 - - [05/Nov/2024 02:32:36] "GET /view_expenses HTTP/1.1" 200 -
+2024-11-05 02:32:44,053 - root - DEBUG - Entering track_budget route
+2024-11-05 02:32:44,054 - root - DEBUG - Budget status calculated
+2024-11-05 02:32:44,057 - werkzeug - INFO - 192.168.65.1 - - [05/Nov/2024 02:32:44] "GET /track_budget HTTP/1.1" 200 -
+2024-11-05 02:32:50,790 - root - DEBUG - Entering set_monthly_budget route
+2024-11-05 02:32:50,791 - root - DEBUG - Rendering set_monthly_budget template
+2024-11-05 02:32:50,794 - werkzeug - INFO - 192.168.65.1 - - [05/Nov/2024 02:32:50] "GET /set_monthly_budget HTTP/1.1" 200 -
+2024-11-05 02:32:57,018 - root - DEBUG - Entering set_monthly_budget route
+2024-11-05 02:32:57,019 - root - DEBUG - Monthly budget set
+2024-11-05 02:32:57,020 - werkzeug - INFO - 192.168.65.1 - - [05/Nov/2024 02:32:57] "[32mPOST /set_monthly_budget HTTP/1.1[0m" 302 -
+2024-11-05 02:32:57,024 - root - DEBUG - Entering home route
+2024-11-05 02:32:57,025 - werkzeug - INFO - 192.168.65.1 - - [05/Nov/2024 02:32:57] "GET / HTTP/1.1" 200 -
+2024-11-05 02:33:00,497 - root - DEBUG - Entering track_budget route
+2024-11-05 02:33:00,498 - root - DEBUG - Budget status calculated
+2024-11-05 02:33:00,499 - werkzeug - INFO - 192.168.65.1 - - [05/Nov/2024 02:33:00] "GET /track_budget HTTP/1.1" 200 -
+2024-11-05 02:33:05,602 - root - DEBUG - Entering view_expenses route
+2024-11-05 02:33:05,601 - werkzeug - INFO - 192.168.65.1 - - [05/Nov/2024 02:33:05] "GET /view_expenses HTTP/1.1" 200 -
